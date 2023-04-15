@@ -5,7 +5,7 @@
 //  Created by Alexandra Baker on 15/04/2023.
 
 // References
-// * Parse HTML with SwiftSoup https://www.youtube.com/watch?v=POVZj4FkEPs
+// * Parse HTML with SwiftSoup https://github.com/scinfu/SwiftSoup
 
 import SwiftUI
 import WebKit
@@ -35,6 +35,7 @@ struct DetailView: View {
         return text
     }
 
+    @State private var explanationText = ""
     
     var body: some View {
         NavigationView {
@@ -42,9 +43,23 @@ struct DetailView: View {
                 
                 // Comic Area
                 Text("Comic # \(number)").font(.title)
+                
+                Text(explanationText).padding()
+                
+                Button("Help! Explain this comic") {
+                    do {
+                        let html = try String(contentsOf: URL(string: "https://www.explainxkcd.com/wiki/index.php/\(number)")!)
+                        let doc = try SwiftSoup.parse(html)
+                        let p = try doc.select("p").first()
+                        explanationText = try p?.text() ?? "Text not found"
+                    } catch {
+                        print("Error: \(error)")
+                        
+                    }
+                }.buttonStyle(.bordered)
 
                 
-                Text(getTextFromWebsite(urlString: urlString)).padding()
+                //Text(getTextFromWebsite(urlString: urlString)).padding()
                 
                 
                 

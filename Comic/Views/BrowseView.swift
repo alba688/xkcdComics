@@ -29,7 +29,7 @@ struct BrowseView: View {
                 NavigationLink(
                     destination: DetailView(number: comicInt)
                 ) {
-                    Text("Explain Comic # \(viewModel.comic.num)")
+                    Text("View Details of Comic # \(viewModel.comic.num)")
                 }
                 
                 
