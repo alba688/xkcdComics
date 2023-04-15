@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct BrowseView: View {
+    @StateObject var viewModel = ComicViewModel()
+    @State var comicInt = Int.random(in: 1...2762)
+    
     var body: some View {
         VStack {
-            Text("Browse View").font(.largeTitle)
             
             // Comic Area
-            Text("Title")
-            Text("Comic Nr.")
+            Text("Title: \(viewModel.comic.title)")
+            Text("Comic Nr: \(viewModel.comic.num)")
             Image("")
                 .frame(width: 300, height: 200)
                 .background(Color.gray)
@@ -34,6 +36,8 @@ struct BrowseView: View {
             Text("Search comics")
                 .padding(20)
                 .border(Color.blue, width:2)
+        }.onAppear {
+            viewModel.fetchComic(comicNum: comicInt)
         }
     }
 }
