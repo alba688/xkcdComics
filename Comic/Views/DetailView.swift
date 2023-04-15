@@ -31,7 +31,6 @@ struct DetailView: View {
         } catch {
             print("Error parsing HTML: \(error)")
         }
-        
         return text
     }
 
@@ -50,8 +49,19 @@ struct DetailView: View {
                     do {
                         let html = try String(contentsOf: URL(string: "https://www.explainxkcd.com/wiki/index.php/\(number)")!)
                         let doc = try SwiftSoup.parse(html)
-                        let p = try doc.select("p").first()
-                        explanationText = try p?.text() ?? "Text not found"
+                        let paras = try doc.select("p")
+                        var explanationText = ""
+                        
+                        for p: Element in paras {
+                            explanationText += try p.text()
+                            explanationText += "\n"
+                        }
+                        
+                        self.explanationText = explanationText
+                        
+                        
+                        
+                        //explanationText = try p?.text() ?? "Text not found"
                     } catch {
                         print("Error: \(error)")
                         
