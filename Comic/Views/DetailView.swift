@@ -13,11 +13,16 @@ import SwiftSoup
 
 struct DetailView: View {
     
-    let number: Int
-    let urlString = "https://www.explainxkcd.com/wiki/index.php/123"
+    //let number: Int
+    var comic: Comic
+    init(comic: Comic) {
+        self.comic = comic
+    }
+    
+    //let urlString = "https://www.explainxkcd.com/wiki/index.php/123"
 
 
-    func getTextFromWebsite(urlString: String) -> String {
+    /* func getTextFromWebsite(urlString: String) -> String {
         var text = ""
         guard let url = URL(string: urlString) else {
             return text
@@ -32,22 +37,24 @@ struct DetailView: View {
             print("Error parsing HTML: \(error)")
         }
         return text
-    }
+    } */
 
     @State private var explanationText = ""
+    @State var isConfirmed = false
+    @State var isCompleted = false
     
     var body: some View {
         NavigationView {
             VStack {
                 
                 // Comic Area
-                Text("Comic # \(number)").font(.title)
+                Text("Comic # \(comic.num)").font(.title)
                 
                 Text(explanationText).padding()
                 
                 Button("Help! Explain this comic") {
                     do {
-                        let html = try String(contentsOf: URL(string: "https://www.explainxkcd.com/wiki/index.php/\(number)")!)
+                        let html = try String(contentsOf: URL(string: "https://www.explainxkcd.com/wiki/index.php/\(comic.num)")!)
                         let doc = try SwiftSoup.parse(html)
                         let paras = try doc.select("p")
                         var explanationText = ""
@@ -58,29 +65,33 @@ struct DetailView: View {
                         }
                         
                         self.explanationText = explanationText
-                        
-                        
-                        
-                        //explanationText = try p?.text() ?? "Text not found"
                     } catch {
                         print("Error: \(error)")
                         
                     }
                 }.buttonStyle(.bordered)
-
-                
-                //Text(getTextFromWebsite(urlString: urlString)).padding()
-                
                 
                 
                 HStack {
                     Button("Favorite ❤️") {
-                        //action here
-                    }.buttonStyle(.bordered)
+                        isConfirmed = true
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .confirmationDialog( "Save", isPresented: $isConfirmed) {
+                        Button("Save to Favorites?") {
+                            DataModel.myShared.addComic(comic: comic)
+                            DataModel.myShared.save()
+                            isCompleted = true
+                        }
+                    }.alert("Comic was saved!", isPresented: $isCompleted) {
+                        Button("Ok", role: .cancel) {}
+                    }
+                    
                     Spacer()
+                    
                     Button("Share ⭐️") {
                         //action here
-                    }.buttonStyle(.bordered)
+                    }.buttonStyle(.borderedProminent)
                     
                 }.padding([.leading, .top, .trailing], 50.0)
                 
@@ -92,6 +103,6 @@ struct DetailView: View {
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView(number: 1)
+        DetailView(comic: Comic(title: "title", num: 1, img: "img", alt: "text"))
     }
 }

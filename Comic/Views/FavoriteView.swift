@@ -8,12 +8,34 @@
 import SwiftUI
 
 struct FavoriteView: View {
+    // declare managed object context
+    @Environment(\.managedObjectContext) var viewContext
+    
+    //fetch request for entity
+    @FetchRequest(entity: DbFavorites.entity(),
+                  sortDescriptors: [
+                    NSSortDescriptor(keyPath: \DbFavorites.number, ascending: true)
+                  ])
+    
+    private var dbFavorites: FetchedResults<DbFavorites>
+    
+    
     var body: some View {
         NavigationView {
             List {
-                Text("Comic 921")
-                Text("Comic 121")
-                Text("Comic 234")
+                ForEach(dbFavorites, id: \.self) { favorite in
+                    HStack {
+                        Text("#\(Int(favorite.number))")
+                        Text(favorite.title ?? "empty")
+                    }
+                    .swipeActions(content: {
+                        Button(role: .destructive, action: {
+                            DataModel.myShared.deleteComic(comic: favorite)
+                        }, label: {
+                            Image(systemName: "trash")
+                        })
+                    })
+                }
             }.navigationTitle("Favorite Comics")
         }
     }
@@ -21,6 +43,6 @@ struct FavoriteView: View {
 
 struct FavoriteView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteView()
+        FavoriteView().environment(\.managedObjectContext, DataModel.myShared.container.viewContext)
     }
 }

@@ -23,11 +23,8 @@ struct BrowseView: View {
                 // Comic Area
                 Text("\(viewModel.comic.title)")
                     .font(.title)
-                Text("\(viewModel.comic.alt)")
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
                 NavigationLink(
-                    destination: DetailView(number: comicInt)
+                    destination: DetailView(comic: viewModel.comic)
                 ) {
                     Text("View Details of Comic # \(viewModel.comic.num)")
                 }
@@ -75,13 +72,16 @@ struct BrowseView: View {
                     TextField("Enter number 1-2762", text: $comicInput)
                         .keyboardType(.decimalPad)
                         .border(Color.gray, width: 1)
-                        .padding()
+                        
                     
                     Button( "Search", action: {
                         comicInt = Int(comicInput) ?? 1
                         viewModel.fetchComic(comicNum: comicInt)
                         
-                    }).buttonStyle(.bordered)
+                    })
+                    .buttonStyle(.bordered)
+                    .foregroundColor(.white)
+                    .background(.blue).cornerRadius(5)
                 }.padding(.horizontal, 50.0)
                 
             }.onAppear {
