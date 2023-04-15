@@ -3,37 +3,65 @@
 //  Comic
 //
 //  Created by Alexandra Baker on 15/04/2023.
-//
+
+// References
+// * Parse HTML with SwiftSoup https://www.youtube.com/watch?v=POVZj4FkEPs
 
 import SwiftUI
+import WebKit
+import SwiftSoup
 
 struct DetailView: View {
     
     let number: Int
+    let urlString = "https://www.explainxkcd.com/wiki/index.php/123"
+
+
+    func getTextFromWebsite(urlString: String) -> String {
+        var text = ""
+        guard let url = URL(string: urlString) else {
+            return text
+        }
+        
+        do {
+            let html = try String(contentsOf: url, encoding: .utf8)
+            let doc = try SwiftSoup.parse(html)
+            let p = try doc.select("p").first()
+            text = try p?.text() ?? "Text not found"
+        } catch {
+            print("Error parsing HTML: \(error)")
+        }
+        
+        return text
+    }
+
     
     var body: some View {
-        VStack {
-            Text("Detail View").font(.largeTitle)
-            
-            // Comic Area
-            Text("Title \(number)")
-            Image("")
-                .frame(width: 300, height: 200)
-                .background(Color.gray)
-            Text("Explanation")
-            HStack {
-                Button("Favorite ❤️") {
-                    //action here
-                }.buttonStyle(.bordered).padding(.leading, 75.0)
-                Spacer()
-                Button("Share ⭐️") {
-                    //action here
-                }.buttonStyle(.bordered).padding(.trailing, 75.0)
+        NavigationView {
+            VStack {
                 
+                // Comic Area
+                Text("Comic # \(number)").font(.title)
+
+                
+                Text(getTextFromWebsite(urlString: urlString)).padding()
+                
+                
+                
+                HStack {
+                    Button("Favorite ❤️") {
+                        //action here
+                    }.buttonStyle(.bordered)
+                    Spacer()
+                    Button("Share ⭐️") {
+                        //action here
+                    }.buttonStyle(.bordered)
+                    
+                }.padding([.leading, .top, .trailing], 50.0)
+                
+                Spacer()
             }
-            
-            Spacer()
-        }
+        }.toolbar(.hidden, for: .tabBar)
     }
 }
 

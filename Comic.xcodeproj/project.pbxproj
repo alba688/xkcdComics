@@ -16,6 +16,7 @@
 		EFC1767929EA93A6007A512C /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC1767829EA93A6007A512C /* FavoriteView.swift */; };
 		EFC1767B29EA9A6A007A512C /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC1767A29EA9A6A007A512C /* Comic.swift */; };
 		EFC1767D29EA9E0E007A512C /* ComicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC1767C29EA9E0E007A512C /* ComicViewModel.swift */; };
+		EFC1768029EAB691007A512C /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = EFC1767F29EAB691007A512C /* SwiftSoup */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFC1768029EAB691007A512C /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +124,9 @@
 			dependencies = (
 			);
 			name = Comic;
+			packageProductDependencies = (
+				EFC1767F29EAB691007A512C /* SwiftSoup */,
+			);
 			productName = Comic;
 			productReference = EFC1766029EA930F007A512C /* Comic.app */;
 			productType = "com.apple.product-type.application";
@@ -150,6 +155,9 @@
 				Base,
 			);
 			mainGroup = EFC1765729EA930F007A512C;
+			packageReferences = (
+				EFC1767E29EAB691007A512C /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			productRefGroup = EFC1766129EA930F007A512C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -381,6 +389,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EFC1767E29EAB691007A512C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EFC1767F29EAB691007A512C /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFC1767E29EAB691007A512C /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EFC1765829EA930F007A512C /* Project object */;
 }
