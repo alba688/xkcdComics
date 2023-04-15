@@ -14,9 +14,6 @@ struct ContentView: View {
                 BrowseView().tabItem {
                    Label("Browse", systemImage: "house.fill")
                 }
-                DetailView().tabItem {
-                    Label("Detail", systemImage: "info.circle")
-                }
                 FavoriteView().tabItem {
                     Label("Faves", systemImage: "heart.circle")
                 }

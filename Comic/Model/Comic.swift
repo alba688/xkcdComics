@@ -11,6 +11,7 @@ struct Comic: Codable, Hashable {
     var title: String
     var num: Int
     var img: String
+    var alt: String
  }
 
 // MARK: make an Explanation struct that links to Comic

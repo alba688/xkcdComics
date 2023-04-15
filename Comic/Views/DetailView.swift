@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct DetailView: View {
+    
+    let number: Int
+    
     var body: some View {
         VStack {
             Text("Detail View").font(.largeTitle)
             
             // Comic Area
-            Text("Title")
+            Text("Title \(number)")
             Image("")
                 .frame(width: 300, height: 200)
                 .background(Color.gray)
@@ -36,6 +39,6 @@ struct DetailView: View {
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView()
+        DetailView(number: 1)
     }
 }

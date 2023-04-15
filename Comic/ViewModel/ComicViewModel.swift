@@ -10,7 +10,7 @@ import SwiftUI
 
 class ComicViewModel: ObservableObject {
     
-    @Published var comic = Comic(title: "Comic", num: 1, img: "Image")
+    @Published var comic = Comic(title: "Comic", num: 1, img: "Image", alt: "Alt")
    
     func fetchComic(comicNum: Int) {
         guard let url = URL(string: "https://xkcd.com/\(comicNum)/info.0.json") else {
