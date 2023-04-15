@@ -97,7 +97,7 @@ struct DetailView: View {
                 
                 Spacer()
             }
-        }.toolbar(.hidden, for: .tabBar)
+        }
     }
 }
 
