@@ -9,7 +9,32 @@ import SwiftUI
 
 struct BrowseView: View {
     var body: some View {
-        Text("Browse View")
+        VStack {
+            Text("Browse View").font(.largeTitle)
+            
+            // Comic Area
+            Text("Title")
+            Text("Comic Nr.")
+            Image("")
+                .frame(width: 300, height: 200)
+                .background(Color.gray)
+            
+            
+            // Navigation Buttons
+            HStack {
+                Button("<< Previous") {
+                    //action
+                }.buttonStyle(.bordered)
+                Button("Next >>") {
+                    //action
+                }.buttonStyle(.bordered)
+            }
+            
+            // Search Area
+            Text("Search comics")
+                .padding(20)
+                .border(Color.blue, width:2)
+        }
     }
 }
 
