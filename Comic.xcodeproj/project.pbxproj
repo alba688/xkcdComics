@@ -19,6 +19,7 @@
 		EFC1768029EAB691007A512C /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = EFC1767F29EAB691007A512C /* SwiftSoup */; };
 		EFC1768429EB1AE2007A512C /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EFC1768229EB1AE2007A512C /* Database.xcdatamodeld */; };
 		EFC1768629EB20DA007A512C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC1768529EB20DA007A512C /* DataModel.swift */; };
+		EFC1768829EBD8A2007A512C /* ExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC1768729EBD8A2007A512C /* ExplanationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		EFC1767C29EA9E0E007A512C /* ComicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicViewModel.swift; sourceTree = "<group>"; };
 		EFC1768329EB1AE2007A512C /* Database.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database.xcdatamodel; sourceTree = "<group>"; };
 		EFC1768529EB20DA007A512C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		EFC1768729EBD8A2007A512C /* ExplanationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplanationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				EFC1767429EA9379007A512C /* BrowseView.swift */,
 				EFC1767629EA938E007A512C /* DetailView.swift */,
+				EFC1768729EBD8A2007A512C /* ExplanationView.swift */,
 				EFC1767829EA93A6007A512C /* FavoriteView.swift */,
 			);
 			path = Views;
@@ -206,6 +209,7 @@
 				EFC1767929EA93A6007A512C /* FavoriteView.swift in Sources */,
 				EFC1767D29EA9E0E007A512C /* ComicViewModel.swift in Sources */,
 				EFC1766429EA930F007A512C /* ComicApp.swift in Sources */,
+				EFC1768829EBD8A2007A512C /* ExplanationView.swift in Sources */,
 				EFC1768629EB20DA007A512C /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

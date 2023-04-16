@@ -13,68 +13,64 @@ import SwiftSoup
 
 struct DetailView: View {
     
-    //let number: Int
     var comic: Comic
     init(comic: Comic) {
         self.comic = comic
     }
-    
-    //let urlString = "https://www.explainxkcd.com/wiki/index.php/123"
 
-
-    /* func getTextFromWebsite(urlString: String) -> String {
-        var text = ""
-        guard let url = URL(string: urlString) else {
-            return text
-        }
-        
-        do {
-            let html = try String(contentsOf: url, encoding: .utf8)
-            let doc = try SwiftSoup.parse(html)
-            let p = try doc.select("p").first()
-            text = try p?.text() ?? "Text not found"
-        } catch {
-            print("Error parsing HTML: \(error)")
-        }
-        return text
-    } */
-
-    @State private var explanationText = ""
+    @State private var explanationTxt = ""
     @State var isConfirmed = false
     @State var isCompleted = false
+    @State private var showingExplanation = false
+    
     
     var body: some View {
+        
         NavigationView {
             VStack {
                 
                 // Comic Area
-                Text("Comic # \(comic.num)").font(.title)
+                Text("More about \(comic.title)").font(.title)
                 
-                Text(explanationText).padding()
-                
-                Button("Help! Explain this comic") {
-                    do {
-                        let html = try String(contentsOf: URL(string: "https://www.explainxkcd.com/wiki/index.php/\(comic.num)")!)
-                        let doc = try SwiftSoup.parse(html)
-                        let paras = try doc.select("p")
-                        var explanationText = ""
-                        
-                        for p: Element in paras {
-                            explanationText += try p.text()
-                            explanationText += "\n"
-                        }
-                        
-                        self.explanationText = explanationText
-                    } catch {
-                        print("Error: \(error)")
-                        
+                // Comic Details
+                AsyncImage(url: URL(string: "\(comic.img)")) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } else if phase.error != nil {
+                        Text("Error loading the image.")
+                    } else {
+                        ProgressView()
                     }
-                }.buttonStyle(.bordered)
+                }
+                .frame(width: 350, height: 300)
+                .padding(.bottom, 10.0)
                 
+                Text("Here is the alt text:")
+                    .multilineTextAlignment(.center)
+                Text("\(comic.alt)").font(.headline)
+                                
+                Spacer()
+                // Toggle sheet view
+                Text("Still confused?")
+                Button("Explain this comic") {
+                            showingExplanation.toggle()
+                        }
+                        .buttonStyle(.bordered)
+                        .sheet(isPresented: $showingExplanation) {
+                            ExplanationView(comic: comic)
+                        }
                 
+                Spacer()
+                
+                // Action buttons
                 HStack {
-                    Button("Favorite ❤️") {
+                    Button {
                         isConfirmed = true
+                    } label: {
+                        Image(systemName: "heart.fill")
+                        Text("Favorite")
                     }
                     .buttonStyle(.borderedProminent)
                     .confirmationDialog( "Save", isPresented: $isConfirmed) {
@@ -88,13 +84,16 @@ struct DetailView: View {
                     }
                     
                     Spacer()
-                    
-                    Button("Share ⭐️") {
-                        //action here
+                    ShareLink(
+                        item: "\(comic.img)",
+                        preview: SharePreview (
+                            "Check out this XKCD comic"
+                        )
+                    ) {
+                        Label("Share", systemImage: "paperplane.fill")
                     }.buttonStyle(.borderedProminent)
                     
-                }.padding([.leading, .top, .trailing], 50.0)
-                
+                }.padding(.horizontal, 50.0)
                 Spacer()
             }
         }
@@ -103,6 +102,6 @@ struct DetailView: View {
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView(comic: Comic(title: "title", num: 1, img: "img", alt: "text"))
+        DetailView(comic: Comic(title: "title", num: 1, img: "https://imgs.xkcd.com/comics/barrel_cropped_(1).jpg", alt: "text"))
     }
 }

@@ -20,6 +20,27 @@ struct BrowseView: View {
         NavigationView {
             VStack {
                 
+                // Search Area
+                HStack {
+                    TextField("Enter number 1-2762", text: $comicInput)
+                        .keyboardType(.decimalPad)
+                        .border(Color.gray, width: 1)
+                        
+                    
+                    Button {
+                        comicInt = Int(comicInput) ?? 1
+                        viewModel.fetchComic(comicNum: comicInt)
+                        
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                    }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(.white)
+                    .background(.blue).cornerRadius(5)
+                }.padding(.horizontal, 50.0).padding(.top, 20.0)
+                
+                Spacer()
+                
                 // Comic Area
                 Text("\(viewModel.comic.title)")
                     .font(.title)
@@ -67,23 +88,7 @@ struct BrowseView: View {
                 }
                 .padding([.leading, .bottom, .trailing], 50.0)
                 
-                // Search Area
-                HStack {
-                    TextField("Enter number 1-2762", text: $comicInput)
-                        .keyboardType(.decimalPad)
-                        .border(Color.gray, width: 1)
-                        
-                    
-                    Button( "Search", action: {
-                        comicInt = Int(comicInput) ?? 1
-                        viewModel.fetchComic(comicNum: comicInt)
-                        
-                    })
-                    .buttonStyle(.bordered)
-                    .foregroundColor(.white)
-                    .background(.blue).cornerRadius(5)
-                }.padding(.horizontal, 50.0)
-                
+                Spacer()
             }.onAppear {
                 viewModel.fetchComic(comicNum: comicInt)
             }.navigationTitle("XKCD Comics")
