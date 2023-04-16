@@ -26,7 +26,7 @@ struct ExplanationView: View {
         
         VStack {
             Text("Explanation of \(comic.title)")
-                .padding()
+                .padding().font(.headline)
             
             ScrollView {
                 Text(extractedText).padding()
@@ -42,7 +42,7 @@ struct ExplanationView: View {
                                     
                                     for p: Element in paras {
                                         explanation += try p.text()
-                                        explanation += "\n"
+                                        explanation += "\n\n"
                                     }
                                     
                                     self.extractedText = explanation
