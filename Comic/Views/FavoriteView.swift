@@ -25,8 +25,19 @@ struct FavoriteView: View {
             List {
                 ForEach(dbFavorites, id: \.self) { favorite in
                     HStack {
-                        Text("#\(Int(favorite.number))")
-                        Text(favorite.title ?? "empty")
+                        
+                        let url = URL(string: favorite.image ?? "")
+                        AsyncImage(url: url, content: { returnedImage in
+                            returnedImage.resizable().scaledToFit()
+                        }, placeholder: {
+                            ProgressView()
+                        }).frame(width: 150, height: 75)
+                        
+                        VStack(alignment: .leading) {
+                            Text("#\(Int(favorite.number))").padding(.top)
+                            Text(favorite.title ?? "empty")
+                            Spacer()
+                        }.padding(.leading)
                     }
                     .swipeActions(content: {
                         Button(role: .destructive, action: {

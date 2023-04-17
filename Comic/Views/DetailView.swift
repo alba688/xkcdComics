@@ -29,10 +29,9 @@ struct DetailView: View {
         NavigationView {
             VStack {
                 
-                // Comic Area
+                // Comic Details
                 Text("More about \(comic.title)").font(.title)
                 
-                // Comic Details
                 AsyncImage(url: URL(string: "\(comic.img)")) { phase in
                     if let image = phase.image {
                         image
@@ -49,7 +48,7 @@ struct DetailView: View {
                 
                 Text("Here is the alt text:")
                     .multilineTextAlignment(.center)
-                Text("\(comic.alt)").font(.headline)
+                Text("\(comic.alt)").font(.headline).padding(.horizontal)
                                 
                 Spacer()
                 // Toggle sheet view
